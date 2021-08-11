@@ -4,10 +4,10 @@ on: create
 
 jobs:
   build:
-    if: github.ref == 'refs/heads/master'
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
-      #- uses: actions/checkout@v2
+    - uses: actions/checkout@v2
 
     - name: Set up node
       uses: actions/setup-node@v1
@@ -16,8 +16,8 @@ jobs:
 
     - name: Create Next App
       run: |
-        npx -y create-next-app --ts . #app
-        #cp app/* .
+        npx -y create-next-app --ts app
+        cp app/* .
         mkdir src
         mv pages styles src
 
@@ -25,9 +25,7 @@ jobs:
 
     - name: Set up ESLint
       run: |
-        next lint --strict
         npm i -D eslint-plugin-jest-dom eslint-plugin-testing-library @typescript-eslint/eslint-plugin
-        mv .templates/.eslintrc.json .eslintrc*
         # Add lint script in package.json
 
     - name: Set up test suite with Jest, React Testing Library, and Axe
